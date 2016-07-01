@@ -3,6 +3,7 @@
 #-----------------------类的继承-----------------------
 #-----------------------类的多重继承-----------------------
 #-----------------------内置迭代器iter()-----------------------
+#-----------------------生成器Yield()使用-----------------------
 #-----------------------生成器创建Yield()有问题-----------------------
 #-----------------------装饰器函数有问题-----------------------
 #-----------------------装饰器类不理解-----------------------
@@ -15,12 +16,17 @@
 #----------------------文件读取操作-----------------------
 #----------------------用threading.Thread直接在线程中运行-----------------------
 #----------------------通过继承threading.Thread类来创建线程(有问题)-----------------------
-#----------------------纯程类Thread使用(join()属性函数基本用法)-----------------------
-#----------------------纯程类Thread使用(daemon属性函数基本用法)(有问题)-----------------------
-#----------------------纯程锁RLock的使用-----------------------
-#----------------------纯程通过Event唤醒对方-----------------------
+#----------------------线程类Thread使用(join()属性函数基本用法)-----------------------
+#----------------------线程类Thread使用(daemon属性函数基本用法)(有问题)-----------------------
+#----------------------线程锁Lock的使用-----------------------
+#----------------------线程锁RLock的使用-----------------------
+#----------------------线程通过Event唤醒对方-----------------------
 #----------------------进程基础调用系统基础-----------------------
 #----------------------用Popen类创建进程(有问题)-----------------------
+#----------------------threading.Thread和普通文件执行时间对比-----------------------
+#----------------------range()与xrange()区别后者为迭代-----------------------
+#----------------------sys模块使用调用、help()函数帮助、默认路径添加-----------------------
+#----------------------os模块使用调用系统命令-----------------------
 '''
 #-----------------------类的继承-----------------------
 class Ant:
@@ -106,7 +112,18 @@ def used_iter():
 	return counter.x
 for i in iter(used_iter,8):
 	print 'This craw is :',i
+'''#-----------------------生成器Yield()使用
 '''
+def test():
+	i = 0
+	a = 4
+	while i < a:
+		x  = yield i
+		i += 1
+for i in test():
+	print i 
+'''
+
 #-----------------------生成器创建Yield()有问题-----------------------
 '''
 def myYield(n):
@@ -317,7 +334,7 @@ class myThread(threading.Thread):
 ma = myThread(1)
 ma.start()
 '''
-#----------------------纯程类Thread使用(join()属性函数基本用法)-----------------------
+#----------------------线程类Thread使用(join()属性函数基本用法)-----------------------
 '''
 import threading
 import time
@@ -333,7 +350,7 @@ tb = threading.Thread(target=thrfun,args=(16,21,ta))
 ta.start()
 tb.start()
 '''
-#----------------------纯程类Thread使用(daemon属性函数基本用法)(有问题)-----------------------
+#----------------------线程类Thread使用(daemon属性函数基本用法)(有问题)-----------------------
 '''
 import threading
 import time
@@ -357,7 +374,25 @@ def main():
 if __name__ == '__main__':
 	main()
 '''
-#----------------------纯程锁RLock的使用-----------------------
+#----------------------线程锁Lock的使用-----------------------
+'''
+import threading
+mlock = threading.Lock()
+num = 0
+def a():
+	global num 
+
+	mlock.acquire()
+	num += 1
+	mlock.release()
+
+	print num
+
+for i in xrange(0,10):
+	d = threading.Thread(target=a)
+	d.start()
+'''
+#----------------------线程锁RLock的使用-----------------------
 '''
 import threading
 import time
@@ -381,7 +416,7 @@ def main():
 if __name__ == '__main__':
 	main()
 '''
-#----------------------纯程通过Event唤醒对方-----------------------
+#----------------------线程通过Event唤醒对方-----------------------
 '''
 import threading
 import time
@@ -447,4 +482,73 @@ print(str(prcs.communicate()[0]))
 print('STDERR:')
 print(prcs.communicate()[1])
 '''
+import threading
+import time
 
+def test(p): 
+	time.sleep(0.001)
+	print p
+
+ts = []
+for i in xrange(0,15):
+	th = threading.Thread(target=test,args=[i])
+	ts.append(th)
+
+for i in ts:
+	i.start()
+for i in ts:
+	i.join()
+	i.join()
+print 'hoho.end!!!!!'
+for i in range(16):
+	print i 
+
+
+#----------------------threading.Thread和普通文件执行时间对比-----------------------
+'''
+import time
+def a():
+	print "a start"
+	time.sleep(2)
+	print "a end"
+def b():
+	print 'b start'
+	time.sleep(2)
+	print 'b end'
+b_time=time.time()
+a()
+b()
+print time.time()-b_time
+#--------------
+import threading
+b_time = time.time()
+_a = threading.Thread(target=a)
+_b = threading.Thread(target=b)
+
+_a.start()
+_b.start()
+_a.join()
+_b.join()
+print time.time()-b_time
+'''
+#----------------------range()与xrange()区别后者为迭代-----------------------
+'''
+print range(0,5)
+print xrange(0,5)
+print type(range(0,5))
+print type(xrange(0,5))
+for i in xrange(0,5):
+	print i 
+'''
+#----------------------sys模块使用调用、help()函数帮助、默认路径添加-----------------------
+'''
+import sys
+print sys.path
+print help(sys)
+sys.path.append('/tmp')
+'''
+#----------------------os模块使用调用系统命令-----------------------
+'''
+import os
+print os.system('pwd')
+'''
