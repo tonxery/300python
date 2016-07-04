@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 #-*- coding:utf-8 -*-
+#(---------------------tab命令补全-----------------------)
+#(---------------------不使用字符转义-----------------------)
+#(---------------------删除空白行，自定义删除字符-----------------------)
 #-----------------------类的继承-----------------------
 #-----------------------类的多重继承-----------------------
 #-----------------------内置迭代器iter()-----------------------
@@ -27,8 +30,28 @@
 #----------------------range()与xrange()区别后者为迭代-----------------------
 #----------------------sys模块使用调用、help()函数帮助、默认路径添加-----------------------
 #----------------------os模块使用调用系统命令-----------------------
+#(---------------------用户名登录测试-----------------------)
+#('---------------------文件内容检索-----------------------')
 #(----------------------遍历文件目录-----------------------)
 
+
+
+
+#(---------------------tab命令补全-----------------------)
+'''
+import rlcompleter,readline
+readline.parse_and_bind('tab: complete')
+'''
+#(---------------------不使用字符转义-----------------------)
+'''
+\可心取消对关键字转义
+'''
+#(---------------------删除空白行，自定义删除字符-----------------------)
+'''
+.lstrip() .rstrip() .strip()分别删除左边、右边、左右两边空白字符
+以都都有可先参数，xml.tag.lstrip('<') #指定删除某字符
+同时删除左右字符xml.tag.strip('<').strip('>')  or xml_tag.strip('<>)
+'''
 '''
 #-----------------------类的继承-----------------------
 class Ant:
@@ -608,37 +631,40 @@ def inpasswd():
 			break
 #inpasswd()
 '''
-"""
+#(---------------------用户名登录测试-----------------------)
+'''
 while True:
 	input = raw_input('Please input your username:')
 	if input == 'Alex':
-		'''
-		password = raw_input('Please input your pass:')
-		p = '123'
-		if password == p:
-			print('Welcome login to TriAquage!\n')
-			break
-		else:
-			print('Wrong password!!!,Try again.')
-			password = raw_input('Please input your pass:')
-			if password == p:
-				print('Welcome login to TriAquage!\n')
-				break
-		'''
-		#inpasswd()
 		password = raw_input('Please input your pass:')
 		p = '123'
 		while password != p:
 			password = raw_input('Wrong passwd,input again:')
 		else:
 			print('Welcome login to TriAquage!\n')
-			break
-
-
-	else:
+			pass
+ 	else:
 		print('Sorry, user %s not found'%input)
-
-"""
+'''
+#('---------------------文件内容检索-----------------------')
+'''
+while True:
+		match_yes = 0
+		input = raw_input('\033[32mPlease input the name who you want to search:\033[0m')
+		contact_file = file('contact_list.txt')
+		while len(input) == 0 or input == '':
+			input = raw_input('\033[32mPlease input the name who you want to search:\033[0m')
+		while True:
+			line = contact_file.readline()
+			if len(line) == 0:break
+			if input in line:
+				print 'Match item:\033[36;1m%s\033[0m'%line,
+				match_yes = 1
+			else:
+				pass
+		if match_yes == 0 :
+			print('No match item foun')
+'''
 '''
 import os
 sep = os.sep
@@ -680,4 +706,4 @@ for parent,dirnames,filenames in os.walk(rootdir):#三个参数：分别返回1.
 		print 'filenameis:'+filename
 	print 'the full name of the file is:'+os.path.join(parent,filename)  #输出文件路径信息
 '''
-#(----------------------测试-----------------------)
+
