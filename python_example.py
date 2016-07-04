@@ -27,6 +27,8 @@
 #----------------------range()与xrange()区别后者为迭代-----------------------
 #----------------------sys模块使用调用、help()函数帮助、默认路径添加-----------------------
 #----------------------os模块使用调用系统命令-----------------------
+#(----------------------遍历文件目录-----------------------)
+
 '''
 #-----------------------类的继承-----------------------
 class Ant:
@@ -552,3 +554,130 @@ sys.path.append('/tmp')
 import os
 print os.system('pwd')
 '''
+#-----------------------while的使用-----------------------
+'''
+count = 0
+i = 5
+while True:
+	if count < i:
+		print(count)
+		count += 1
+	else:
+		break
+'''
+#-----------------------for的使用、print,+str输出类型-----------------------
+'''
+for i in range(1,100):
+	if i == 23:
+		print('great,you got your lucky number, which is %d'%i)
+		print('great,you got your lucky number, which is ',i)
+		print('great,you got your lucky number, which is '+str(i))
+
+	else:
+		print 'The number is %d'%i
+'''
+#-----------------------raw_input使用-----------------------
+"""
+name = raw_input("Name:")
+age = int(raw_input("Age:"))
+job = raw_input("Job:")
+if age < 28:
+	print("congruatulations,you still can have the holiday at May 4th!")
+elif name == 'shenfen':
+	print('You can do it as you had sent a gift to your boss!')
+else:
+	print("Boss saying: don't even think about it, get back to work!")
+print('''
+	\tName:%s
+	\tAge:%d
+	\tJob:%s
+	'''%(name,age,job))
+"""
+
+
+'''
+def inpasswd():
+	count = 3
+	i = 0
+	p = '123'
+	while i < count:
+		password = raw_input('Please input your pass:')
+		i += 1
+		if password == p:
+			print('Welcome login to TriAquage!\n')
+			break
+#inpasswd()
+'''
+"""
+while True:
+	input = raw_input('Please input your username:')
+	if input == 'Alex':
+		'''
+		password = raw_input('Please input your pass:')
+		p = '123'
+		if password == p:
+			print('Welcome login to TriAquage!\n')
+			break
+		else:
+			print('Wrong password!!!,Try again.')
+			password = raw_input('Please input your pass:')
+			if password == p:
+				print('Welcome login to TriAquage!\n')
+				break
+		'''
+		#inpasswd()
+		password = raw_input('Please input your pass:')
+		p = '123'
+		while password != p:
+			password = raw_input('Wrong passwd,input again:')
+		else:
+			print('Welcome login to TriAquage!\n')
+			break
+
+
+	else:
+		print('Sorry, user %s not found'%input)
+
+"""
+'''
+import os
+sep = os.sep
+print sep
+path = u'/tmp/test'
+File = [path+sep+i for i in os.listdir(path) if os.path.isfile(path + sep + i)]
+print '\n'.join(File)
+#a = ['abc','defd']
+#print a
+#print '\n'.join(a)
+for p,i in enumerate(File):
+	if not isinstance(i,unicode):
+		i = i.decode('utf-8')
+
+	i = os.path.join(path+sep,i)
+
+	a,b = os.path.split(i)
+	c,d = b.split('.')
+
+	j = os.path.join(a+sep,u'更改名称%s'%p+'.'+'jpg')
+	if not os.path.exists(j):
+		os.rename(i,j)
+print "-------------------分隔线----------------------"
+File = [path+sep+i for i in os.listdir(path) if os.path.isfile(path+sep+i)]
+print '\n'.join(File)
+'''
+#(----------------------遍历文件目录-----------------------)
+'''
+import os
+import os.path
+rootdir = '/tmp'  # 指明被遍历的文件夹
+for parent,dirnames,filenames in os.walk(rootdir):#三个参数：分别返回1.父目录 2.所有文件夹名字（不含路径） 3.所有文件名字 
+	for dirname in dirnames: #输出文件夹信息
+		print 'parent is:'+parent
+		print 'dirname is'+dirname
+
+	for filename in filenames: #输出文件信息
+		print 'parent is:'+parent
+		print 'filenameis:'+filename
+	print 'the full name of the file is:'+os.path.join(parent,filename)  #输出文件路径信息
+'''
+#(----------------------测试-----------------------)
