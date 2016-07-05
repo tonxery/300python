@@ -3,6 +3,12 @@
 #(---------------------tab命令补全-----------------------)
 #(---------------------不使用字符转义-----------------------)
 #(---------------------删除空白行，自定义删除字符-----------------------)
+#('---------------------大小写转换-----------------------')
+#('---------------------字符串分隔符-----------------------')
+#('---------------------字符串提取.join()-----------------------')
+#('---------------------字符串替换-----------------------')
+#('---------------------unicode-----------------------')
+#(---------------------用函数迭代取出深层列表list数据-----------------------)
 #-----------------------类的继承-----------------------
 #-----------------------类的多重继承-----------------------
 #-----------------------内置迭代器iter()-----------------------
@@ -52,6 +58,61 @@ readline.parse_and_bind('tab: complete')
 以都都有可先参数，xml.tag.lstrip('<') #指定删除某字符
 同时删除左右字符xml.tag.strip('<').strip('>')  or xml_tag.strip('<>)
 '''
+#('---------------------大小写转换-----------------------')
+'''
+.lower()、.upper()
+'''
+#('---------------------字符串分隔符-----------------------')
+"""
+.split(',')、.split('|')
+ multiline_string = '''This
+   .....: is
+   .....: a multiline
+   .....: piece of
+   .....: text'''
+lines = multiline_string.splitlines()
+ for line in lines:
+    print 'START LINE::'
+    print line.split()
+    print '::END LINE'
+
+"""
+#('---------------------字符串提取.join()-----------------------')
+'''
+some_list = range(10)
+','.join([str(i) for i in some_list])
+','.join(str(i) for i in some_list)
+'''
+#('---------------------字符串替换-----------------------')
+'''
+replable_string = 'trancendental hibernationl nation'
+replable_string.replace('nation','natty'）
+'''
+#('---------------------unicode-----------------------')
+'''
+unicode_string = u'this is a unicode string'
+或者：a = unicode('this is a unicode string')
+
+'''
+#(---------------------用函数迭代取出深层列表list数据-----------------------)
+"""
+movies = [
+	"The Holy Grail",1975,"Terry Jones & Terry Gilliam",91,
+	["Graham Chapamn",
+	["Michael Palin","John Cleese","Terry Gilliam","Eric Idle","Terry Joness"]
+	]
+]
+def print_lol(the_list):
+	'''
+	This function takes one positional 
+	'''
+	for each_item in the_list:
+		if isinstance(each_item,list):
+			print_lol(each_item)
+		else:
+			print(each_item)
+print_lol(movies)
+"""
 '''
 #-----------------------类的继承-----------------------
 class Ant:
