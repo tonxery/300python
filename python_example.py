@@ -39,6 +39,9 @@
 #(---------------------用户名登录测试-----------------------)
 #('---------------------文件内容检索-----------------------')
 #(----------------------遍历文件目录-----------------------)
+#(----------------------删除空格-----------------------)
+#(----------------------指定分隔符-----------------------)
+#(----------------------正则表达式-----------------------)
 
 
 
@@ -766,5 +769,50 @@ for parent,dirnames,filenames in os.walk(rootdir):#三个参数：分别返回1.
 		print 'parent is:'+parent
 		print 'filenameis:'+filename
 	print 'the full name of the file is:'+os.path.join(parent,filename)  #输出文件路径信息
+'''
+#(----------------------删除空格-----------------------)
+'''
+spacious_string = "\n\t Some Non-Spacious Text\n \t \r"
+spacious_string                                        #正常输出
+print spacious_string                                
+spacious_string.lstrip()                               #删除左空格
+print spacious_string.lstrip()
+spacious_string.rstrip()                               #删除右空格
+print spacious_string.rstrip()
+spacious_string.strip()                                #删除两边空格
+print spacious_string.strip()
+xml_tag = "<some_tag>"
+xml_tag.lstrip("<")
+xml_tag.rstrip(">")
+xml_tag.strip("<").strip(">")
+xml_tag.strip("<>")
+'''
+#(----------------------指定分隔符-----------------------)
+'''
+comma_delim_string = 'pos1,pos2,pos3'
+pipe_delim_string = "pipepos1|pipepos2|pipepos3"
+comma_delim_string.split(',')
+pipe_delim_string.split('|')
+'''
+#(----------------------正则表达式-----------------------)
+'''
+import re
+def run_re():
+	pattern = '299'
+	re_obj = re.compile(pattern)
+
+	infile = open('../12306.txt','r')
+	match_count = 0
+	lines = 0
+	for line in infile:
+		match = re_obj.search(line)
+		if match:
+			match_count += 1
+		lines += 1
+	return(lines,match_count)
+if __name__ == "__main__":
+	lines,match_count = run_re()
+	print 'LINES::',lines
+	print 'MATCHES::',match_count
 '''
 
